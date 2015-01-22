@@ -418,7 +418,7 @@ if len(sys.argv) > 1:
         print "TaskLegion uninstalled."
     elif command == 'create':
         print "Creating new Legion..."
-        name = raw_input('Enter an ID: ')
+        name = raw_input('Enter an unique name for the legion: ')
         ldata = raw_input('Enter local data.location: ')
         rdata = raw_input('Enter remote data.location: ')
         TP = TaskLegion(name, ldata, rdata)
