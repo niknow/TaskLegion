@@ -139,12 +139,12 @@ class EnhancedTaskWarrior(object):
 class TaskLegion(object):
     """ A project that is shared with others. """
 
-    def __init__(self, ID='', ldata='/', rdata='/'):
+    def __init__(self, name='', ldata='/', rdata='/'):
         self._local_data = None
         self._remote_data = None
         self.tw_local = None
         self.tw_remote = None
-        self.ID = ID
+        self.name = name
         self.local_data = ldata
         self.remote_data = rdata
 
@@ -170,14 +170,14 @@ class TaskLegion(object):
         return self.__repr__()
 
     def set_json(self, data):
-        self.ID = data['ID']
+        self.name = data['name']
         self.local_data = data['local_data']
         self.remote_data = data['remote_data']
 
     json = property(get_json, set_json)
 
     def __repr__(self):
-        return {'ID': self.ID, 'local_data': self.local_data, 'remote_data': self.remote_data}
+        return {'name': self.name, 'local_data': self.local_data, 'remote_data': self.remote_data}
 
     def __str__(self):
         return str(self.__repr__())
@@ -188,10 +188,10 @@ class TaskLegion(object):
         print "Tasks added."
 
     def remove(self, pattern):
-        for ta_task in self.tw_local.tasks(pattern + 'Legion:' + self.ID):
+        for ta_task in self.tw_local.tasks(pattern + 'Legion:' + self.name):
             ta_task.remove()
             ta_task.save()
-        print "Tasks removed from " + self.ID + " ."
+        print "Tasks removed from " + self.name + " ."
 
     def sync(self):
 
@@ -268,7 +268,7 @@ class TaskLegion(object):
             synclist.append(download)
         # present synclist and allow modifications
         if synclist:
-            print "\nSuggesting the following sync operations on " + self.ID + "...\n\n"
+            print "\nSuggesting the following sync operations on " + self.name + "...\n\n"
             sync_command = sync_preview(synclist)
             if sync_command == 'a':
                 for elem in synclist:
@@ -304,7 +304,7 @@ class TaskLegion(object):
                         self.tw_local.add_task(elem.remote_task)
             print "\nSync complete.\n"
         else:
-            print "Legion " + self.ID + " is in sync.\n"
+            print "Legion " + self.name + " is in sync.\n"
 
 
 class SyncElement():
@@ -418,10 +418,10 @@ if len(sys.argv) > 1:
         print "TaskLegion uninstalled."
     elif command == 'create':
         print "Creating new Legion..."
-        ID = raw_input('Enter an ID: ')
+        name = raw_input('Enter an ID: ')
         ldata = raw_input('Enter local data.location: ')
         rdata = raw_input('Enter remote data.location: ')
-        TP = TaskLegion(ID, ldata, rdata)
+        TP = TaskLegion(name, ldata, rdata)
         TG.create_legion(TP)
         TG.save()
     elif command == 'list':
