@@ -44,7 +44,7 @@ class IOManager(object):
     @staticmethod
     def get_input(msg, pre_blanks=0, post_blanks=0):
         IOManager.newlines(pre_blanks)
-        data = input(msg)
+        data = raw_input(msg)
         IOManager.newlines(post_blanks)
         return data
 
@@ -56,7 +56,7 @@ class IOManager(object):
             self._configfile_name = value
         else:
             self._configfile_name = os.path.expanduser("~") \
-                                    + "\\task_arena_config"
+                                    + "/.task_arena_config"
 
     configfile_name = property(_get_configfile_name, _set_configfile_name)
 
